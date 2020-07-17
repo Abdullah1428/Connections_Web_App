@@ -1,0 +1,36 @@
+Web Enginnering Assignment 4 
+Submitted to -> Madam Madiha
+
+Abdullah 16pwcse1428 Section B
+
+Project Structure
+
+=> inside client_and_server_code dist folder contains all the files of the project
+
+=> Front end screens are index.html,register.html,login.html,
+   home.html,sendMessage.html,inbox.html,outbox.html 
+=> index.html is the entry point for the project
+=> All the styling for the project is inside css folder in a file named
+   style.min.css
+=> img folder has image showcase which is used a background image in index.html page
+
+=> The server side code is inside a folder named server
+=> The server files or api files are register.php,login.php,allUsers.php,
+   uploadImage.php,sendMessage.php,inbox.php,outbox.php
+=> database.php file contains the database and server information
+=> images folder is the folder where all the user Images are uploaded
+   during registration
+
+Database file
+
+=> inside database folder connections.sql file is present which is
+   sql database used for this project
+=> There are screenshots inside database folder which describes the tables
+   of the database
+
+Demonstration Video
+
+=> inside demonstration_video folder there is video which demonstrates
+   the project and shows the working of all features in the project 
+
+This project has been built using HTML5,CSS3,JS and JS (AJAX calls), and php 

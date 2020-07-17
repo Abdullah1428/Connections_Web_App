@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/style.min.css" />
+    <title>Welcome</title>
+</head>
+
+<body>
+    <nav class="navbar bg-dark">
+        <h1>
+            <a href="index.html"> <i class="fas fa-code"></i> Connections (get connected) </a>
+        </h1>
+        <ul>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </nav>
+    <section class="container">
+        <div style="display: none;" id="alertBox" class="alert">
+            Invalid Credentials
+        </div>
+        <h1 class="large text-primary">
+            Sign In
+        </h1>
+        <p class="lead text-green"><i class="fas fa-user"></i> Sign into your account</p>
+        <form id="login" name="login" class="form">
+            <div class="form-group">
+                <input id="userEmail" type="email" placeholder="Email Address" name="userEmail" />
+            </div>
+            <div class="form-group">
+                <input id="userPassword" type="password" placeholder="Password" name="userPassword" minlength="6" />
+            </div>
+            <input type="submit" value="Login" class="btn btn-primary" />
+        </form>
+        <p class="my-1 text-green">
+            Don't have an account? <a href="register.html">Sign Up</a>
+        </p>
+    </section>
+
+    <script>
+        document.getElementById('login').addEventListener('submit',userLogin);
+        var alertBox = document.getElementById('alertBox');        
+        function userLogin(e) {
+            e.preventDefault();
+
+            var userEmail = document.getElementById('userEmail').value;
+            var userPassword = document.getElementById('userPassword').value;
+            var params = "userEmail="+userEmail+"&"+"userPassword="+userPassword;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','server/login.php',true);
+            xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+
+            xhr.onload = function () {
+                var result = JSON.parse(this.responseText);
+        
+                if(result.success == 1) {
+                    localStorage.setItem("userID",result.userinfo[0].id);
+                    localStorage.setItem("userName",result.userinfo[0].name);
+                    localStorage.setItem("userEmail",result.userinfo[0].email)
+                    localStorage.setItem("userImage",result.userinfo[0].image);
+                    
+                    alertBox.innerHTML = result.message;
+                    alertBox.classList.add("alert-success");
+                    alertBox.style.display = "block";
+                    var timer1 = setInterval(() => {
+                        alertBox.classList.remove("alert-success");
+                        alertBox.style.display = "none";
+                        window.location.href = "home.html"
+                        clearInterval(timer1);
+                    }, 2000);
+
+                } else {
+                    alertBox.innerHTML = result.message;
+                    alertBox.classList.add("alert-danger");
+                    alertBox.style.display = "block";
+
+                    var timer2 = setInterval(() => {
+                        alertBox.classList.remove("alert-danger");
+                        alertBox.style.display = "none";
+                        clearInterval(timer2);
+                    }, 2000);
+                }
+                
+            }
+            xhr.send(params);
+        }
+    </script>
+
+</body>
+
+</html>
